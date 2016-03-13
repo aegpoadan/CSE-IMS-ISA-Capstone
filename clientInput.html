@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enter a Request</title>
+<!-- 84.51 recieving-end screen -->
+	<link rel="stylesheet" type="text/css" href="Skeleton-2.0.4/css/skeleton.css">
+	<link rel="stylesheet" type="text/css" href="Skeleton-2.0.4/css/normalize.css">
+</head>
+<!-- .container is main centered wrapper -->
+<div class="container">
+
+	<!-- header row -->
+  	<div class="row">
+   		<div class="one-third column"></div>
+   		<div class="one-third column">Ask ACE Request</div>
+   		<div class="one-third column"></div>
+  	</div>
+
+  	<!-- Team and Name fields -->
+  	<div class="row">
+    	<form>
+      <div class="one column">Name: </div>
+      <div class="eleven columns">
+  			<div class="nameField"> Scott Kelly</div>
+        </div>
+        </div>
+        <div class="row">
+  			<div class="one column">Team: </div> 
+        <div class="eleven columns">
+  			<div class="teamField">Chips</div>
+        </div>
+  		</form>
+  	</div>
+
+    <!-- tag Text field -->
+    <div class="row">
+    <form>
+    <select list="tag" name="tagsSel">
+      <datalist id="tags">
+        <option value="null">Please choose an option</option>
+        <option value="MidWest">MidWest</option>
+        <option value="Chips">Chips</option>
+        <option value="Prices">Prices</option>
+        <option value="Coupons">Coupons</option>
+        <option value="Cinicinati">Cincinati</option>
+      </datalist>
+      </select>
+      </form>
+    </div>
+
+  	<!-- request Text field -->
+  	<div class="row">
+  			Request:<br>
+  			<textarea class="requestField"></textarea><br>
+  	</div>
+
+  	<!-- respond button -->
+  	<div class="row">
+    <br>
+  		<div class="two columns"></div>
+  		<div class="eight columns">
+  			<button class="button-primary">Send to ACE</button>
+  		</div>
+  		<div class="two columns"></div>
+  	</div>
+
+</div>
