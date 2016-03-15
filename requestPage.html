@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+	<link rel="stylesheet" type="text/css" href="./Skeleton-2.0.4/css/skeleton.css">
+	<link rel="stylesheet" type="text/css" href="./Skeleton-2.0.4/css/normalize.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script type="text/javascript">
+		function convertFormToJSON() {
+			return $('form').serializeArray();
+		}
+	</script>
+</head>
+<body style="max-width: 900px;">
+	<div class="row" style="padding-bottom: 15px; margin: 10px;">
+		<div class="four columns">
+			<button>Graph</button>
+		</div>
+		<div class="four columns">
+			<button>Forum</button>
+		</div>
+		<div class="four columns">
+			<button>Alert</button>
+		</div>
+	</div>
+	<div class="row" style="padding-bottom: 15px; margin: 10px;">
+		<form style="text-align: left;">
+			<input style="margin: 10px;" type="text" name="Location" value="Location:"></input><br>
+			<input style="margin: 10px;" type="date" name="fromDate" value="">Date 1</input><br>
+			<input style="margin: 10px;" type="date" name="toDate" value="">Date 2</input><br>
+			<input style="margin: 10px;" type="text" name="Brand" value="Brand:"></input><br>
+			<input style="margin: 10px;" type="text" name="Description" value="Description:"></input><br>
+		</form>
+	</div>
+	<div class="row" style="padding-bottom: 15px; margin: 10px;">
+		<p>Please choose a graph style:</p>
+		<form style="text-align: left;">
+			<input style="margin: 10px;" type="radio" name="graph" value="bar">bar graph</input>
+			<input style="margin: 10px;" type="radio" name="graph" value="scatter">scatter plot</input>
+			<input style="margin: 10px;" type="radio" name="graph" value="pie">pie chart</input>
+		</form>
+	</div>
+	<div class="row" style="padding-bottom: 15px; margin: 10px;">
+		<form style="text-align: left;">
+			<input style="margin: 10px;" type="text" name="teams" value="Team(s):"></input><br>
+			<input style="margin: 10px;" type="text" name="recipients" value="Send to:"></input><br>
+		</form>
+	</div>
+	<div class="row" style="padding-bottom: 15px; margin: 10px;">
+		<button>Request</button>
+	</div>
+</body>
