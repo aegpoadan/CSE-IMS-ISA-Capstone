@@ -1,0 +1,94 @@
+function getBase64Image(imgElem) { // imgElem must be on the same server otherwise a cross-origin error will be thrown "SECURITY_ERR: DOM Exception 18"
+    "use strict";
+    var canvas = document.createElement("canvas");
+    canvas.width = imgElem.clientWidth;
+    canvas.height = imgElem.clientHeight;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(imgElem, 0, 0);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
+
+var api = {
+    host: "http://192.168.1.51:8080", //"http://192.168.1.225:8080",
+    //host: "http://hayesap.383.csi.miamioh.edu:8080",
+    init: function (email, password, callback) {
+      this.post(
+          "/FlipItServlet/FlipIt/api/login",
+          ["email="+email, "password="+password],
+          function (data) {
+             if(data.hasOwnProperty("login") && data.login == "success"
+              || (data.hasOwnProperty("error") && data.error == "already logged in")) {
+               callback(data);
+             }
+          }
+      );
+    },
+    get: function (page, params, callback) {
+        "use strict";
+        //console.log(params);
+        var actual = (params ? params.join("&") : "");
+        
+        $.ajax({
+            url: api.host + page + (actual !== "" ? "?" + actual : ""),
+            xhrFields: {
+              withCredentials: true
+            },
+            type: "GET",
+            crossDomain: true,
+            dataType: "json",
+            success: function (response) {
+              if (callback) {
+                callback(response);
+              }
+            },
+            error: function (xhr, status) {
+              console.error(xhr);
+              /*if (callback) {
+                callback(null);
+              }*/
+            }
+        });
+    },
+    //posting:
+    post: function (page, params, callback, options) {
+        "use strict";
+        var actual = {};
+        for(var i = 0; i < params.length; i++) {
+          var vals = params[i].split("=");
+          actual[vals[0]] = vals[1];
+        }
+        //console.log(actual);
+        
+        var passedOptions = {
+            url: api.host + page,
+            xhrFields: {
+              withCredentials: true
+            },
+            type: "POST",
+            crossDomain: true,
+            data: actual,
+            dataType: "json",
+            success: function (response) {
+              if (callback) {
+                callback(response);
+              }
+            },
+            error: function (xhr, status) {
+              console.log(xhr);
+              console.log(status);
+              /*if (callback) {
+                callback(null);
+              }*/
+            }
+        };
+        
+        if(options !== 'undefined') {
+          $.extend(passedOptions, options);
+        }
+        
+        //console.log(passedOptions);
+        
+        $.ajax(passedOptions);
+    }
+};

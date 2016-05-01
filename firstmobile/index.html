@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <title>San Joaquin Valley Town Hall</title>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<link href="styles.css" rel="stylesheet" type="text/css">    
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script>
+	var IP = '172.25.53.66';
+	$.ajaxSetup({
+	  xhrFields: {
+	    withCredentials: true
+	  }
+	});
+	console.log($.post('http://'+IP+':8080/CapstoneServlet/Capstone/api/login',
+			{email: 'frankthetank@gmail.com',
+			 password: '1234',
+			 xhrFields: {withCredentials: true}
+			}
+	)
+	);
+</script>
+</head>
+
+<body>
+<div data-role="page" id="home">
+    <header data-role="header">
+        <h1>Team Feed</h1>
+        <div data-role="navbar">
+		<ul>
+			<li><a href="#team1" data-icon="grid" data-theme="b" class="ui-btn-active">Team 1</a></li>
+			<li><a href="#team2" data-icon="grid" data-theme="b">Team 2</a></li>
+            <li><a href="#team3" data-icon="grid" data-theme="b">Team 3</a></li>
+		</ul>
+		</div>
+    </header>
+    
+    <section id="content" data-role="content">
+       <script>
+       		var conversations = getMessages();
+       		function getMessages() {
+				$.get(
+				  	'http://'+IP+':8080/CapstoneServlet/Capstone/api/get/messages',
+				  	{ 	limit: '5',
+				  		otherID: '1',
+				  		conversationIndex: '0',
+				  		dataType: 'json',
+				    	method: 'GET',
+				    	xhrFields: {withCredentials: true}
+			    	},
+			    	function(response) {
+			    		var msgs = document.getElementById('content')
+			    		while (msgs.hasChildNodes())
+			    			msgs.removeChild(msgs.lastChild);
+
+			    		console.log(response.messages[0]);
+				   		$.each(
+				   			response.messages,
+				   			function(index, value){
+				   				var conv = document.createElement('div');
+				   				conv.appendChild(document.createTextNode(value.fromID));
+				   				conv.appendChild(document.createTextNode(value.messageText));	   	
+				   				msgs.appendChild(conv);
+				   			}
+			   			);
+					}
+			  	);
+				setTimeout(getMessages, 5000);
+			};
+			console.log(conversations);
+
+       </script>
+    </section>
+       
+    <footer data-role="footer">
+        <h4>
+        	&copy;&nbsp;
+        	<script>
+        		var today = new Date();
+        		document.write(today.getFullYear());
+        		document.write(", 8451");
+        	</script>
+        </h4>
+    </footer>
+</div>
+
+</body>
+</html>
