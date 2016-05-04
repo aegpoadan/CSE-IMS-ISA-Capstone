@@ -10,15 +10,15 @@
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script>
 	var IP = 'ubuntu@ec2-52-10-212-9.us-west-2.compute.amazonaws.com';
-	var myID = 1;
-	var otherID = 0;
+	var myID = 0;
+	var otherID = 1;
 	$.ajaxSetup({
 	  xhrFields: {
 	    withCredentials: true
 	  }
 	});
 	console.log($.post('http://'+IP+':8080/CapstoneServlet/Capstone/api/login',
-			{email: 'jacktheripper@gmail.com',
+			{email: 'frankthetank@gmail.com',
 			 password: '1234',
 			 xhrFields: {withCredentials: true}
 			}
