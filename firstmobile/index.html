@@ -9,7 +9,9 @@
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script>
-	var IP = '172.25.53.66';
+	var IP = '172.25.54.80';
+	var myID = 0;
+	var otherID = 1;
 	$.ajaxSetup({
 	  xhrFields: {
 	    withCredentials: true
@@ -44,9 +46,8 @@
        		function getMessages() {
 				$.get(
 				  	'http://'+IP+':8080/CapstoneServlet/Capstone/api/get/messages',
-				  	{ 	limit: '5',
-				  		otherID: '1',
-				  		conversationIndex: '0',
+				  	{ 	limit: '10',
+				  		otherID: otherID,
 				  		dataType: 'json',
 				    	method: 'GET',
 				    	xhrFields: {withCredentials: true}
@@ -56,12 +57,11 @@
 			    		while (msgs.hasChildNodes())
 			    			msgs.removeChild(msgs.lastChild);
 
-			    		console.log(response.messages[0]);
 				   		$.each(
-				   			response.messages,
+				   			response.messages.reverse(),
 				   			function(index, value){
 				   				var conv = document.createElement('div');
-				   				conv.appendChild(document.createTextNode(value.fromID));
+				   				conv.appendChild(document.createTextNode(value.senderName+"\t"));
 				   				conv.appendChild(document.createTextNode(value.messageText));	   	
 				   				msgs.appendChild(conv);
 				   			}
@@ -70,10 +70,32 @@
 			  	);
 				setTimeout(getMessages, 5000);
 			};
-			console.log(conversations);
 
        </script>
     </section>
+
+    <div>
+    <!-- handle user input -->
+        <form>
+    		<input type="text" id="msgInput">
+		</form>
+    	<button type="button" onclick="sendMessage()" name="text">Send</button>
+    	<script>
+    		function sendMessage() {
+    			var msg = document.getElementById("msgInput").value;
+    			console.log(msg);
+    			$.post("http://"+IP+":8080/CapstoneServlet/Capstone/api/post/message",
+    			{
+    				ToID: otherID,
+    				MessageText: msg
+    			},
+    			function(response) {
+    				console.log(response);
+    				document.getElementById("msgInput").value="";
+    			});
+    		};
+    	</script>
+    </div>
        
     <footer data-role="footer">
         <h4>
@@ -81,7 +103,7 @@
         	<script>
         		var today = new Date();
         		document.write(today.getFullYear());
-        		document.write(", 8451");
+        		document.write(", 84.51");
         	</script>
         </h4>
     </footer>
