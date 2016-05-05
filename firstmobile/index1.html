@@ -1,17 +1,20 @@
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"> 
-    <title>ACE Team Feed</title>
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-<link href="styles.css" rel="stylesheet" type="text/css">    
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<script>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>8451 Test</title>
+		<meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1" />
+		<meta name="description" content="This site was created from a template originally designed and developed by Codify Design Studio. Find more free templates at http://www.adobe.com/devnet/author_bios/chris_converse.html" />
+		<link href="jquery-mobile/jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css" />
+		<script src="jquery-mobile/jquery-1.6.4.min.js" type="text/javascript"></script>
+		<script src="jquery-mobile/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="themes/my_company.min.css" />
+		<link rel="stylesheet" href="includes/overrides.css" />
+		<script type="text/javascript" src="includes/custom.js"></script>
+		<script>
 	var IP = 'ec2-52-10-212-9.us-west-2.compute.amazonaws.com';
-	var myID = 0;
-	var otherID = 1;
+	var myID = 1;
+	var otherID = 0;
 	$.ajaxSetup({
 	  xhrFields: {
 	    withCredentials: true
@@ -25,23 +28,41 @@
 	)
 	);
 </script>
-</head>
+	</head>
+	<body>
 
-<body>
-<div data-role="page" id="home">
-    <header data-role="header">
-        <h1>Team Feed</h1>
-        <div data-role="navbar">
-		<ul>
-			<li><a href="#team1" data-icon="grid" data-theme="b" class="ui-btn-active">Team 1</a></li>
-			<li><a href="#team2" data-icon="grid" data-theme="b">Team 2</a></li>
-            <li><a href="#team3" data-icon="grid" data-theme="b">Team 3</a></li>
-		</ul>
-		</div>
-    </header>
-    
-    <section id="content" data-role="content">
-       <script>
+	<div data-role="page" id="home" data-theme="a">
+			<div data-role="header">
+				<h1>Homepage</h1>
+                <p> TEAM FEEDS
+                </p>
+			</div>
+			<div data-role="content">
+            <div class="ui-block-a"> 
+                        <img src="images/top-header.png" width="450" height="34" alt=""/>
+
+            
+            </div>
+
+<div class="ui-block-b">
+  
+</div>
+            
+            <div class="ui-block-c">
+            
+              <img src="images/locators.png" width="440" height="30" alt=""/> </div>
+<div class="ui-block-d">
+</div>
+<div class="ui-block-e">
+
+<section id="content">
+
+
+
+
+
+
+ <script>
        		getMessages();
        		function getMessages() {
 
@@ -95,7 +116,7 @@
 				$.each(
 		   			response,
 		   			function(index, value){
-		   				console.log(value);
+		   				//console.log(value);
 		   				var conv = document.createElement('div');
 		   				if('pics' in value) {
 		   					conv.appendChild(document.createTextNode("ACE:\n"));
@@ -114,15 +135,15 @@
 		   				}
 		   				conv.appendChild(document.createElement('br'));
 		   				conv.appendChild(document.createElement('br'));
-		   				msgs.appendChild(conv);
+		   				msgs.appendChild(conv, msgs.firstChild);
 		   			}
 	   			);
 			};
 
        </script>
-    </section>
+</section>
 
-    <div>
+    <div id="formDiv">
     <!-- handle user input -->
         <form>
     		<input type="text" id="msgInput">
@@ -144,18 +165,113 @@
     		};
     	</script>
     </div>
-       
-    <footer data-role="footer">
-        <h4>
-        	&copy;&nbsp;
-        	<script>
-        		var today = new Date();
-        		document.write(today.getFullYear());
-        		document.write(", 84.51");
-        	</script>
-        </h4>
-    </footer>
-</div>
 
-</body>
+
+
+
+<!--   Big space, put yo shit here  -->
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div> 
+            
+            
+            </div>
+			<div data-role="footer">
+            <ul data-role="listview">
+					<li class="btn_a"><a href="#">Home</a></li>
+		            <li class="btn_s"><a href="#">Profile</a></li>
+					<li class="btn_l"><a href="#">Feed</a></li>
+					<li class="btn_c"><a href="#">Dashboard</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div data-role="page" id="about_us" data-title="About Us">
+			<div data-role="header">
+				<h1>About Us</h1>
+				<a href="#" data-rel="back" data-icon="arrow-l" data-iconpos="notext">back</a>
+			</div>
+			<div data-role="content">
+				
+			</div>
+			<div data-role="footer">
+				<div data-role="controlgroup" data-type="horizontal">
+					<a href="#home" data-role="button" data-icon="home">Home</a>
+					<a href="#contact_us" data-role="button" data-icon="grid">Contact Us</a>
+				</div>
+			</div>
+		</div>
+		
+		<div data-role="page" id="services" data-title="Services">
+			<div data-role="header">
+				<h1>Services</h1>
+				<a href="#" data-rel="back" data-icon="arrow-l" data-iconpos="notext">back</a>
+			</div>
+			<div data-role="content">
+				</div>
+				<p>Find a <a href="#locations">location near you</a>.</p>
+			</div>
+			<div data-role="footer">
+				<div data-role="controlgroup" data-type="horizontal">
+					<a href="#home" data-role="button" data-icon="home">Home</a>
+					<a href="#contact_us" data-role="button" data-icon="grid">Contact Us</a>
+				</div>
+			</div>
+		
+		<div data-role="page" id="locations" data-title="Find a Locations">
+			<div data-role="header">
+				<h1>Locations</h1>
+				<a href="#" data-rel="back" data-icon="arrow-l" data-iconpos="notext">back</a>
+			</div>
+			<div data-role="content">
+				<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+				<h2>Find a location</h2>
+				<ul data-role="listview" data-filter="true" data-inset="true" class="countries">
+					
+				</ul>
+			</div>
+			<div data-role="footer">
+				<ul data-role="listview">
+					<li class="btn_a"><a href="#home">Home</a></li>
+		            <li class="btn_s"><a href="#services">Dashboard</a></li>
+					<li class="btn_l"><a href="#locations">Feed</a></li>
+					<li class="btn_c"><a href="#contact_us">Profile</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div data-role="page" id="contact_us" data-title="Contact Us">
+			<div data-role="header">
+				<h1>Contact Us</h1>
+				<a href="#" data-rel="back" data-icon="arrow-l" data-iconpos="notext">back</a>
+			</div>
+			<div data-role="content" class="content_container">
+				<h1></h1>
+				<p class="instructions">Choose one of our <a href="#locations">locations</a> for contact information.</p>
+				<p class="contact_info"><a class="phonelink" href="tel:5555555555">(555) 555-5555</a></p>
+				<p class="contact_info">Find more <a href="#locations">locations</a> here.</p>
+			</div>
+			<div data-role="footer">
+				<div data-role="controlgroup" data-type="horizontal">
+					<a href="#home" data-role="button" data-icon="home">Home</a>
+				</div>
+			</div>
+		</div>
+
+
+	</body>
 </html>

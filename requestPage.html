@@ -7,46 +7,202 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script type="text/javascript">
 		function convertFormToJSON() {
-			return $('form').serializeArray();
+			var array =  $('#' + activeContainer.id + ' form').serializeArray();
+			array.push({'value' : $(activeContainer)[0].id, 'name' : 'type'});
+			array.push({'value' : 'Andrew', 'name' : 'name'});
+			array.push({'value' : 'ACE', 'name' : 'team'});
+			return array;
+		}
+
+		var urlParams;
+		(window.onpopstate = function () {
+    		var match,
+        	pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        	search = /([^&=]+)=?([^&]*)/g,
+        	decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        	query  = window.location.search.substring(1);
+
+    		urlParams = {};
+    		while (match = search.exec(query))
+       		urlParams[decode(match[1])] = decode(match[2]);
+		})();
+
+		function findAncestor(el, cls) {
+			while((el = el.parentElement) && !el.classList.contains(cls));
+			return el;
+		}
+
+		function toggle(id, button, newButton) {
+			$(activeContainer).toggleClass('hidden');
+			$('#' + id).toggleClass('hidden');
+			activeContainer = $('#' + id)[0];
+			button.removeClass('selected');
+			$('#' + newButton).addClass('selected');
+		}
+
+		function openPage(url) {
+			var params = convertFormToJSON();
+			var paramsString = '?';
+			for (var i = 0; i<params.length; i++) {
+				paramsString += params[i].name + '=' + params[i].value + '&';
+			}
+			paramsString = removeLastChar(paramsString);
+			window.open(url + paramsString, '_blank');
+		}
+
+		function removeLastChar(str) {
+			return str.substring(0, str.length - 1);
 		}
 	</script>
+	<style>
+		@import url(@import url(https://fonts.googleapis.com/css?family=Cabin: 400,500,600);
+        
+		.hidden {
+			display: none;
+		}
+            
+        header {
+                padding: 5px;
+        }
+        
+        body {
+           Background-color: white;
+           color: black;
+           font-family: 'Cabin', sans-serif;    
+        }
+            
+    	.container {
+            border: 2px solid #EC008B;
+            padding: 10px;
+        }
+
+        span {
+        	border-style: solid;
+        	border-color: black;
+        	border-width: 1px;
+      	}
+
+      	input {
+      		margin-top: 10px;
+      		margin-bottom: 10px;
+      		margin-left: 5px;
+      	}
+
+      	.selected {
+    	    background-color: white !important;
+    		color: #EC008B !important;
+        }
+
+        h2 {
+        	color: white;
+        	text-align: center;
+        }
+	</style>
 </head>
 <body style="max-width: 900px;">
-	<div class="row" style="padding-bottom: 15px; margin: 10px;">
-		<div class="four columns">
-			<button>Graph</button>
+	<div style="max-width: 900px; height: 50px; background-color: gray;">
+		<h2>Ask A.C.E.</h2>
+	</div>
+	<div id="Graph" class="container" style='border: 1px; border-color: #ff00ff; border-style: solid;'>
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<div class="four columns">
+				<button id="graphButton" class="button-primary graphButton selected" onclick="toggle('Graph', $(this), 'graphButton');">Graph</button>
+			</div>
+			<div class="four columns">
+				<button class="button-primary forumButton" onclick="toggle('Forum', $(this), 'forumButton')">Forum</button>
+			</div>
+			<div class="four columns">
+				<button class="button-primary alertButton" onclick="toggle('Alert'), $(this), 'alertButton'">Alert</button>
+			</div>
 		</div>
-		<div class="four columns">
-			<button>Forum</button>
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<form style="text-align: left;">
+				<span style="border: 1px solid black; padding: 1px;">From Date:<input style="" type="date" name="fromDate" value=""></input><br></span>
+				<span style="border: 1px solid black; padding: 1px;">To Date:<input style="" type="date" name="toDate" value=""></input><br></span>
+				<span style="border: 1px solid black; padding: 1px;">Brand(s):<input style="" type="text" name="Brand" value=""></input><br></span>
+				<textarea rows="5" cols="50" style="" type="text" name="Description" value="">Description</textarea><br>
+			</form>
 		</div>
-		<div class="four columns">
-			<button>Alert</button>
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<p>Please choose a graph style:</p>
+			<form style="text-align: left;">
+				<input style="margin: 10px;" type="radio" name="graph" value="bar">bar graph</input>
+				<input style="margin: 10px;" type="radio" name="graph" value="scatter">scatter plot</input>
+				<input style="margin: 10px;" type="radio" name="graph" value="pie">pie chart</input>
+			</form>
+		</div>
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<form style="text-align: left;">
+				<span style="">Team(s):<input style="" type="text" name="teams" value=""></input><br></span>
+				<span style="">Send to:<input style="" type="text" name="recipients" value=""></input><br></span>
+			</form>
+		</div>
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<button class="button-primary" onclick="openPage('./recievedRequest.html')">Request</button>
+			<p>ACE will respond to your request within 24 business hours.</p>
 		</div>
 	</div>
-	<div class="row" style="padding-bottom: 15px; margin: 10px;">
-		<form style="text-align: left;">
-			<input style="margin: 10px;" type="text" name="Location" value="Location:"></input><br>
-			<input style="margin: 10px;" type="date" name="fromDate" value="">Date 1</input><br>
-			<input style="margin: 10px;" type="date" name="toDate" value="">Date 2</input><br>
-			<input style="margin: 10px;" type="text" name="Brand" value="Brand:"></input><br>
-			<input style="margin: 10px;" type="text" name="Description" value="Description:"></input><br>
-		</form>
+	<div id="Forum" class="container hidden">
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<div class="four columns">
+				<button class="button-primary graphButton" onclick="toggle('Graph', $(this), 'graphButton')">Graph</button>
+			</div>
+			<div class="four columns">
+				<button id="forumButton" class="button-primary forumButton" onclick="toggle('Forum', $(this), 'forumButton')">Forum</button>
+			</div>
+			<div class="four columns">
+				<button class="button-primary alertButton" onclick="toggle('Alert', $(this), 'alertButton')">Alert</button>
+			</div>
+		</div>
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<form style="text-align: left;">
+				From Date:<input style="margin: 10px;" type="date" name="fromDate" value=""></input><br>
+				To Date:<input style="margin: 10px;" type="date" name="toDate" value=""></input><br>
+				Description: <textarea name="description" rows="5" cols="50" style="margin: 10px;" type="text" name="Description" value=""></textarea><br>
+			</form>
+		</div>
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<form style="text-align: left;">
+				<input style="margin: 10px;" type="text" name="teams" value="Team(s):"></input><br>
+				<input style="margin: 10px;" type="text" name="recipients" value="Send to:"></input><br>
+			</form>
+		</div>
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<button class="button-primary" onclick="openPage('./recievedRequest.html')">Request</button>
+			<p>ACE will respond to your request within 24 business hours.</p>
+		</div>
 	</div>
-	<div class="row" style="padding-bottom: 15px; margin: 10px;">
-		<p>Please choose a graph style:</p>
-		<form style="text-align: left;">
-			<input style="margin: 10px;" type="radio" name="graph" value="bar">bar graph</input>
-			<input style="margin: 10px;" type="radio" name="graph" value="scatter">scatter plot</input>
-			<input style="margin: 10px;" type="radio" name="graph" value="pie">pie chart</input>
-		</form>
+	<div id="Alert" class="container hidden">
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<div class="four columns">
+				<button id="graphButton" class="button-primary graphButton" onclick="toggle('Graph', $(this), 'graphButton')">Graph</button>
+			</div>
+			<div class="four columns">
+				<button class="button-primary forumButton" onclick="toggle('Forum', $(this), 'forumButton')">Forum</button>
+			</div>
+			<div class="four columns">
+				<button id="alertButton" class="button-primary alertButton"onclick="toggle('Alert', $(this), 'alertButton')">Alert</button>
+			</div>
+		</div>
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<form style="text-align: left;">
+				From Date:<input style="margin: 10px;" type="date" name="fromDate" value=""></input><br>
+				To Date:<input style="margin: 10px;" type="date" name="toDate" value=""></input><br>
+				Description: <textarea name="description" rows="5" cols="50" style="margin: 10px;" type="text" name="Description" value=""></textarea><br>
+			</form>
+		</div>
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<form style="text-align: left;">
+				<input style="margin: 10px;" type="text" name="teams" value="Team(s):"></input><br>
+				<input style="margin: 10px;" type="text" name="recipients" value="Send to:"></input><br>
+			</form>
+		</div>
+		<div class="row" style="padding-bottom: 15px; margin: 10px;">
+			<button class="button-primary" onclick="openPage('./recievedRequest.html')">Request</button>
+			<p>ACE will respond to your request within 24 business hours.</p>
+		</div>
 	</div>
-	<div class="row" style="padding-bottom: 15px; margin: 10px;">
-		<form style="text-align: left;">
-			<input style="margin: 10px;" type="text" name="teams" value="Team(s):"></input><br>
-			<input style="margin: 10px;" type="text" name="recipients" value="Send to:"></input><br>
-		</form>
-	</div>
-	<div class="row" style="padding-bottom: 15px; margin: 10px;">
-		<button>Request</button>
-	</div>
+	<script>
+		var activeContainer = $('#Graph')[0];
+	</script>
 </body>
